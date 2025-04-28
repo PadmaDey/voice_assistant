@@ -21,15 +21,42 @@
 # # pip cache purge
 
 
-Flask==2.3.3
-tensorflow==2.15.0
-transformers==4.39.3
-python-dotenv==1.0.1
-sounddevice==0.4.6
-soundfile==0.12.1
-numpy==1.26.4
-scipy==1.13.0
-pydub==0.25.1
-chromadb==0.4.24
-torch==2.2.2
-torchaudio==2.2.2
+
+
+
+# Flask==2.3.3
+# tensorflow==2.15.0
+# transformers==4.39.3
+# python-dotenv==1.0.1
+# sounddevice==0.4.6
+# soundfile==0.12.1
+# numpy==1.26.4
+# scipy==1.13.0
+# pydub==0.25.1
+# chromadb==0.4.24
+# torch==2.2.2
+# torchaudio==2.2.2
+
+
+# Update the TensorFlow version to a compatible version.
+tensorflow==2.18.0  # Or use a version like tensorflow>=2.16.0,<=2.18.0
+
+# Keep the rest as is.
+sounddevice
+scipy
+openai-whisper
+transformers
+torch
+torchaudio
+pyttsx3
+groq-sdk
+numpy
+librosa
+scikit-learn
+python-dotenv
+textblob>=0.18.0
+# python -m textblob.download_corpora
+chromadb
+flask-socketio
+Flask>=2.3
+gunicorn>=21.2
