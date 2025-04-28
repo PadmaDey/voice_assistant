@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: voice-assistant-flask-app
+    env: docker
+    plan: free
+    branch: main
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: HF_TOKEN
+        sync: false  # You will manually set this secret in Render dashboard
+      - key: GROQ_API_KEY
+        sync: false  # Same, manually add it securely
+    autoDeploy: true

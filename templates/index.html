@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>🎙️ Voice Assistant</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body class="light-mode">
+
+    <!-- 🌗 Theme Toggle -->
+    <div class="theme-toggle">
+        <button onclick="toggleTheme()">🌙 Toggle Dark/Light Mode</button>
+    </div>
+
+    <div class="layout">
+        <!-- 💬 Chat Container -->
+        <main class="chat-container">
+            <h1>🤖 Voice Assistant</h1>
+
+            <!-- 🔄 Status -->
+            <div class="status-bar">
+                <strong>Status:</strong> {{ status }}
+            </div>
+
+            <!-- 💬 Chat History -->
+            <div class="chat-window" id="chatWindow">
+                {% if chat_history %}
+                    {% for entry in chat_history %}
+                        <div class="chat-bubble user">
+                            <span class="label">🧑 You:</span>
+                            <p>{{ entry.user }}</p>
+                        </div>
+                        <div class="chat-bubble emotion">
+                            <span class="label">😶 Emotion:</span>
+                            <p>{{ entry.emotion }}</p>
+                        </div>
+                        <div class="chat-bubble bot">
+                            <span class="label">🤖 Groq:</span>
+                            <div class="preformatted">{{ entry.response }}</div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="chat status">
+                        <p>No conversation yet. Click the button and start talking!</p>
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- ⬇️ Scroll Indicator -->
+            <div id="scroll-indicator" class="scroll-indicator" onclick="scrollToBottom()">
+                ⬇️ New Message
+            </div>
+
+            <!-- 🎤 Voice Record Button -->
+            <form class="form" method="POST" action="/record">
+                <button type="submit" class="talk-btn">🎤 Start Talking</button>
+            </form>
+        </main>
+    </div>
+
+    <!-- 📜 Scripts -->
+    <script>
+        function toggleTheme() {
+            document.body.classList.toggle("dark-mode");
+            document.body.classList.toggle("light-mode");
+        }
+
+        function scrollToBottom() {
+            const chatWindow = document.getElementById('chatWindow');
+            chatWindow.scrollTo({ top: chatWindow.scrollHeight, behavior: 'smooth' });
+            document.getElementById('scroll-indicator').style.display = 'none';
+        }
+
+        function isAtBottom(el) {
+            return el.scrollHeight - el.scrollTop <= el.clientHeight + 30;
+        }
+
+        function showScrollIndicatorIfNeeded() {
+            const chatWindow = document.getElementById('chatWindow');
+            const indicator = document.getElementById('scroll-indicator');
+            indicator.style.display = isAtBottom(chatWindow) ? 'none' : 'block';
+        }
+
+        function fetchLatestChat() {
+            fetch('/latest_chat')
+                .then(res => res.json())
+                .then(data => {
+                    if (data.chat_history) {
+                        const chatWindow = document.getElementById('chatWindow');
+                        const lastBot = chatWindow.querySelector('.chat-bubble.bot:last-of-type');
+                        const newResponse = data.chat_history.response;
+
+                        if (!lastBot || lastBot.querySelector('.preformatted').textContent !== newResponse) {
+                            chatWindow.innerHTML += `
+                                <div class="chat-bubble user">
+                                    <span class="label">🧑 You:</span>
+                                    <p>${data.chat_history.user}</p>
+                                </div>
+                                <div class="chat-bubble emotion">
+                                    <span class="label">😶 Emotion:</span>
+                                    <p>${data.chat_history.emotion}</p>
+                                </div>
+                                <div class="chat-bubble bot">
+                                    <span class="label">🤖 Groq:</span>
+                                    <div class="preformatted">${newResponse}</div>
+                                </div>`;
+
+                            if (!isAtBottom(chatWindow)) {
+                                document.getElementById('scroll-indicator').style.display = 'block';
+                            } else {
+                                scrollToBottom();
+                            }
+                        }
+                    }
+                })
+                .catch(err => console.error("Polling error:", err));
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const chatWindow = document.getElementById('chatWindow');
+            scrollToBottom();
+            chatWindow.addEventListener('scroll', showScrollIndicatorIfNeeded);
+            setInterval(fetchLatestChat, 3000);
+        });
+    </script>
+</body>
+</html>

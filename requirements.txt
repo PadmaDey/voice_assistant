@@ -1,0 +1,21 @@
+sounddevice
+scipy
+openai-whisper
+transformers
+torch
+torchaudio
+pyttsx3
+groq-sdk
+numpy
+librosa
+scikit-learn
+python-dotenv
+textblob>=0.18.0
+# python -m textblob.download_corpora
+chromadb
+flask-socketio
+
+Flask>=2.3
+gunicorn>=21.2
+
+# pip cache purge
