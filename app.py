@@ -187,10 +187,14 @@
 
 
 
-
-
 import os
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  # Silence TensorFlow logs early
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  # Must be at the top
+
+import tensorflow as tf
+tf.get_logger().setLevel('ERROR')
+
+import warnings
+warnings.filterwarnings("ignore", category=DeprecationWarning)
 
 import uuid
 import warnings
