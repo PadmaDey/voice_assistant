@@ -178,6 +178,8 @@ voice_assistant_venv/
 helper.md
 chroma_store/
 chroma_store/chroma.sqlite3
-Dockerfile
+# Dockerfile
+.dockerignore
+docker-compose.yaml
 
 .wav

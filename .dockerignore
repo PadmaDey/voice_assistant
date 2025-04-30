@@ -1,0 +1,14 @@
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.db
+env/
+.venv/
+venv/
+voice_assistant_venv/
+*.mp3
+*.wav
+.env
+
+.yaml/
