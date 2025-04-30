@@ -173,5 +173,9 @@ cython_debug/
 # PyPI configuration file
 .pypirc
 
+voice_assistant_venv/
 
+helper.md
 chroma_store/
+
+.wav
