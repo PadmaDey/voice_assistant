@@ -177,5 +177,7 @@ voice_assistant_venv/
 
 helper.md
 chroma_store/
+chroma_store/chroma.sqlite3
+Dockerfile
 
 .wav
