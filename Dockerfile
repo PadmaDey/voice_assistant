@@ -17,6 +17,9 @@ RUN apt-get update && apt-get install -y \
 RUN pip install --upgrade pip && \
     pip install --no-cache-dir -r requirements.txt
 
+# ✅ Explicitly set PORT env var    
+ENV PORT=5000  
+
 # Expose the Flask app port
 EXPOSE 5000
 
