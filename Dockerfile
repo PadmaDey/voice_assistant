@@ -1,6 +1,6 @@
 # Use official Python image
-# FROM python:3.9-slim
-FROM python:3.9-alpine
+FROM python:3.9-slim
+# FROM python:3.9-alpine
 
 # Set working directory inside the container
 WORKDIR /app
@@ -26,3 +26,4 @@ EXPOSE 5000
 
 # Start the Flask app
 CMD ["python", "app.py"]
+
